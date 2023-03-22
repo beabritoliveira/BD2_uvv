@@ -9,3 +9,4 @@ from employee
 LEFT OUTER Join account on (employee.emp_id = account.open_emp_id)
 GROUP BY employee.emp_id, YEAR(open_date)
 ORDER BY employee.fname ASC, YEAR(open_date) ASC;
+
