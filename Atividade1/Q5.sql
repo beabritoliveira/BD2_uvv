@@ -39,3 +39,4 @@ CREATE or REPLACE view view_quatro AS
   Where saldo.valor = tbv.pending_balance ;
 
 SELECT * from view_quatro;
+
