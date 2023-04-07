@@ -24,12 +24,13 @@ INNER JOIN branch ON (customer.city != branch.city);
 as contas que eles abriram (usando open_emp_id). Ordene os resultados por ordem alfabética,
 e depois por ano (do mais antigo para o mais recente)*/
 
-SELECT CONCAT((employee.fname), " ", (employee.lname)) as NomeFuncionario, 
-		COUNT(YEAR(open_date)) as TransacaoNoAno, YEAR(account.open_date) as Ano
+SELECT CONCAT((fname), " ", (lname)) as NomeFuncionario, 
+		COUNT(YEAR(open_date)) as TransacaoNoAno, YEAR(open_date) as Ano
 from employee
 JOIN account on (employee.emp_id = account.open_emp_id)
 GROUP BY employee.emp_id, YEAR(open_date)
 ORDER BY employee.fname ASC, YEAR(open_date) ASC;
+
 
 
 
