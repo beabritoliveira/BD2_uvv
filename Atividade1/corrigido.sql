@@ -3,8 +3,8 @@ da empresa que eles administram (business.name) e cidade onde ela está presente
 
 SELECT CONCAT((lname), " ,", (fname)) as administrador, name as nomeEmpresa, city
 from business 
-JOIN officer Using (cust_id)
-JOIN customer Using (cust_id);
+JOIN officer USING (cust_id)
+JOIN customer USING (cust_id);
 
 
 /*Escreva uma consulta que retorne os nome dos clientes (nome das pessoas jurídicas ou nome + sobrenome
