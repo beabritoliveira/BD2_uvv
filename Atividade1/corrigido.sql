@@ -1,10 +1,10 @@
 /*Escreva uma consulta que retorne o nome e sobrenome de todos os administradores (officer) com o nome
 da empresa que eles administram (business.name) e cidade onde ela está presente (customer.city).*/
 
-SELECT CONCAT((officer.lname), " ,", (officer.fname)) as administrador, business.name as nomeEmpresa, customer.city
+SELECT CONCAT((lname), " ,", (fname)) as administrador, name as nomeEmpresa, city
 from business 
-INNER JOIN officer ON (business.cust_id = officer.cust_id)
-INNER JOIN customer ON (business.cust_id = customer.cust_id);
+JOIN officer Using (cust_id)
+JOIN customer Using (cust_id);
 
 
 /*Escreva uma consulta que retorne os nome dos clientes (nome das pessoas jurídicas ou nome + sobrenome
