@@ -62,9 +62,8 @@ FROM(
     FROM account ac JOIN customer USING (cust_id)
     GROUP BY open_branch_id
   ) as a
-Where tabela_virtual.valor = a.pb
+Where valor = pb
 ORDER BY agencia, valor DESC;
-
 
 
 /* Escreva de novo as consultas 2. e 4. utilizando uma visualização (CREATE VIEW) */
