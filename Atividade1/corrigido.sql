@@ -10,13 +10,13 @@ JOIN customer USING (cust_id);
 /*Escreva uma consulta que retorne os nome dos clientes (nome das pessoas jurídicas ou nome + sobrenome
 das pessoas físicas) que possuem uma conta em uma cidade diferente da cidade de estabelecimento.*/
 
-SELECT DISTINCT CONCAT((individual.lname), " ,", (individual.fname)) as nomeCliente /*customer.city, branch.city*/
-from individual, customer, branch
-WHERE individual.cust_id = customer.cust_id AND NOT customer.city = branch.city
+SELECT DISTINCT CONCAT((lname), " ,", (fname)) as nomeCliente
+from individual i, customer c, branch b
+WHERE i.cust_id = c.cust_id AND NOT c.city = b.city
 UNION
-SELECT DISTINCT business.name as nomeClient /*customer.city, branch.city */
-FROM business
-INNER JOIN customer Using (cust_id) 
+SELECT DISTINCT bu.name as nomeCliente 
+FROM business bu
+INNER JOIN customer USING (cust_id) 
 INNER JOIN branch ON (customer.city != branch.city);
 
 
