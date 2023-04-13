@@ -65,7 +65,7 @@ FROM(
   	FROM account a
 	INNER JOIN business bu USING (cust_id)
 	INNER JOIN branch br ON (open_branch_id = branch_id)
-  ) AS tabela_virtual, (
+  ) AS tabela_p, (
     SELECT open_branch_id, ac.cust_id, account_id, MAX(pending_balance) as pb
     FROM account ac JOIN customer USING (cust_id)
     GROUP BY open_branch_id
