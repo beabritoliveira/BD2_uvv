@@ -1,4 +1,4 @@
-/*Escreva uma consulta que retorne o nome e sobrenome de todos os administradores (officer) com o nome
+/*1- Escreva uma consulta que retorne o nome e sobrenome de todos os administradores (officer) com o nome
 da empresa que eles administram (business.name) e cidade onde ela está presente (customer.city).*/
 
 SELECT CONCAT((lname), " ,", (fname)) as administrador, name as nomeEmpresa, city
@@ -7,7 +7,7 @@ JOIN officer USING (cust_id)
 JOIN customer USING (cust_id);
 
 
-/*Escreva uma consulta que retorne os nome dos clientes (nome das pessoas jurídicas ou nome + sobrenome
+/*2- Escreva uma consulta que retorne os nome dos clientes (nome das pessoas jurídicas ou nome + sobrenome
 das pessoas físicas) que possuem uma conta em uma cidade diferente da cidade de estabelecimento.*/
 
 SELECT DISTINCT CONCAT((lname), " ,", (fname)) as nomeCliente
@@ -20,7 +20,17 @@ INNER JOIN customer USING (cust_id)
 INNER JOIN branch ON (customer.city != branch.city);
 
 
-/*Escreva uma consulta que retorne os nomes dos funcionários com os números de transações por ano envolvendo
+/*3.1 - Escreva uma consulta que retorne os nome de todos os funcionários com, se for o caso, os números de
+transações por ano envolvendo as contas que eles abriram (usando open_emp_id). Ordene os resultados
+por ordem alfabética, e depois por ano (do mais antigo para o mais recente).*/
+
+SELECT COUNT(YEAR(open_date)) as Transacao_Ano, CONCAT((employee.fname), " ", (employee.lname)) as Nome, YEAR(account.open_date) as Ano
+from employee
+LEFT OUTER Join account on (employee.emp_id = account.open_emp_id)
+GROUP BY employee.emp_id, YEAR(open_date)
+ORDER BY employee.fname ASC, YEAR(open_date) ASC;
+
+/*3.2 - Escreva uma consulta que retorne os nomes dos funcionários com os números de transações por ano envolvendo
 as contas que eles abriram (usando open_emp_id). Ordene os resultados por ordem alfabética,
 e depois por ano (do mais antigo para o mais recente)*/
 
@@ -32,9 +42,7 @@ GROUP BY employee.emp_id, YEAR(open_date)
 ORDER BY employee.fname ASC, YEAR(open_date) ASC;
 
 
-
-
-/*Escreva uma consulta que retorne os identificadores de contas com maior saldo de dinheiro por agência,
+/*4 - Escreva uma consulta que retorne os identificadores de contas com maior saldo de dinheiro por agência,
 juntamente com os nomes dos titulares (nome da empresa ou nome e sobrenome da pessoa física) e os
 nomes dessas agências.*/
 
@@ -66,8 +74,9 @@ Where valor = pb
 ORDER BY agencia, valor DESC;
 
 
-/* Escreva de novo as consultas 2. e 4. utilizando uma visualização (CREATE VIEW) */
+/*5 - Escreva de novo as consultas 2. e 4. utilizando uma visualização (CREATE VIEW) */
 
+/*View da consulta 2*/
 Create OR REPLACE VIEW view_cliente AS (
 	SELECT DISTINCT CONCAT((lname), " ,", (fname)) as nomeCliente /*customer.city, branch.city*/
     from individual, customer, branch
@@ -81,6 +90,8 @@ Create OR REPLACE VIEW view_cliente AS (
 
 select * from view_cliente;
 
+
+/*View da consulta 4*/
 CREATE or REPLACE view view_quatro AS
   SELECT contas, nomeTitular, nomeAgencia, valor
   FROM(
