@@ -47,3 +47,11 @@ create table filme (
   	UNIQUE KEY filme_idx (titulo),
     CONSTRAINT pk_filme PRIMARY KEY (id_filme)
 );
+
+alter table genero add foreign key (id_filme) references filme (id_filme);
+alter table atores add foreign key (id_func) references funcionario (id_func);
+alter table funcionario add foreign key (id_fed) references federacao (id_fed);
+alter table funcionario add foreign key (id_filmes) references filme (id_filme);
+alter table filme add foreign key (id_diretor) references funcionario (id_func);
+alter table filme add foreign key (id_roteirista) references funcionario (id_func);
+alter table filme add foreign key (genero) references genero (genero);
