@@ -17,7 +17,7 @@ CREATE table fornecedor(
   	id_restaurante int, /*FK que referencia a tabela restaurante*/
   	item_fornecido int not null, /*FK que referencia a tabela item cardápio*/
   	telefone char(11),
-  	CONSTRAINT pk_fornecedor PRIMARY KEY (id_fornecedor),  
+  	CONSTRAINT pk_fornecedor PRIMARY KEY (id_fornecedor)
 );
 
 CREATE table funcionario(
@@ -29,7 +29,7 @@ CREATE table funcionario(
   	data_contratacao date not null,
   	funcao varchar(35) not null, 
   	telefone char(11),
-  	CONSTRAINT pk_funcionario PRIMARY KEY (id_funcionario),  
+  	CONSTRAINT pk_funcionario PRIMARY KEY (id_funcionario)
 );
 
 CREATE table federacao(
@@ -37,7 +37,7 @@ CREATE table federacao(
   	cidade varchar(45) not null,
  	estado char(2) not null,
  	endereco varchar(100),
-   	CONSTRAINT pk_federacao PRIMARY KEY (id_fed),    
+   	CONSTRAINT pk_federacao PRIMARY KEY (id_fed)   
 );
 
 CREATE table cardapio(
@@ -59,6 +59,6 @@ CREATE table licenca_sanitaria(
 	num_licenca int not null,
   	data_emissao date not null,
   	validade date not null,
-  	cnpj char(14) not null
+  	cnpj char(14) not null,
 	CONSTRAINT pk_LS PRIMARY KEY (num_licenca)
 );
