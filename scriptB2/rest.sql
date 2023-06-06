@@ -32,6 +32,9 @@ CREATE table funcionario(
   	CONSTRAINT pk_funcionario PRIMARY KEY (id_funcionario)
 );
 
+ALTER TABLE funcionario ADD CONSTRAINT ck_func_sexo 
+CHECK (sexo IN('M', 'F'));
+
 CREATE table federacao(
 	id_fed int not null AUTO_INCREMENT,
   	cidade varchar(45) not null,
@@ -55,10 +58,47 @@ CREATE table itemCardapio(
   	CONSTRAINT pk_itemCardapio PRIMARY KEY (id_item)
 );
 
+ALTER TABLE itemCardapio ADD CONSTRAINT ck_itemCardapio_minutos_preparo 
+CHECK (minutos_preparo >= 0);
+
 CREATE table licenca_sanitaria(
-	num_licenca int not null,
+	num_licenca char(3) not null,
   	data_emissao date not null,
   	validade date not null,
   	cnpj char(14) not null,
 	CONSTRAINT pk_LS PRIMARY KEY (num_licenca)
 );
+
+
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_idChefe
+FOREIGN KEY (id_chefe) REFERENCES funcionario (id_funcionario)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_lSanitaria
+FOREIGN KEY (alvara_sanitario) REFERENCES licenca_sanitaria (num_licenca)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_idFederecao
+FOREIGN KEY (id_fed) REFERENCES federacao (id_fed)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE fornecedor ADD CONSTRAINT fk_fornecedor_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE fornecedor ADD CONSTRAINT fk_fornecedor_item
+FOREIGN KEY (item_fornecido) REFERENCES itemCardapio (id_item)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE funcionario ADD CONSTRAINT fk_funcionario_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE cardapio ADD CONSTRAINT fk_cardapio_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE itemCardapio ADD CONSTRAINT fk_itemCardapio_idCardapio
+FOREIGN KEY (id_cardapio) REFERENCES cardapio (id_cardapio)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
