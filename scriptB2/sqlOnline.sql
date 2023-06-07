@@ -202,33 +202,28 @@ VALUES
 
 SELECT * from itemCardapio;
 
-INSERT INTO funcionario (id_restaurante, sobrenome, nome, sexo, data_contratacao, funcao, telefone)
-VALUES (1, 'Doe', 'John', 'M', 170214, 'sou-chef', '21-98765432');
+INSERT INTO funcionario (id_funcionario, id_restaurante, nome, sobrenome, sexo, data_contratacao, funcao, telefone)
+VALUES
+(null, 1, 'Doe', 'John', 'M', 170214, 'sou-chef', '21-98765432');
+(18, (select id_restaurante from restaurante where id_chefe = 18), 'Jacob', 'Lopez', 'M', 200504, 'chefe', '21-98765432'),
+(12, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'Austin', 'Charles', 'M', 211208, 'chefe', null),
+(5, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'Sheryl', 'Mccarty', 'F', 220714, 'chefe', null),
+(21, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'Andrea', 'Morales', 'M', 180228, 'chefe', null),
+(32, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'John', 'Diaz', 'M', 200805, 'chefe', null),
+(38, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'William','Weber', 'M', 190331, 'chefe', null),
+(15, (select id_restaurante from restaurante where id_chefe = id_funcionario), 'Kristopher', 'Brown', 'M', 220902, 'chefe', null);
 
 SELECT * FROM funcionario;
 
-INSERT INTO funcionario (id_funcionario, id_restaurante, nome, sobrenome, sexo, data_contratacao, funcao, telefone)
+INSERt INTO fornecedor (id_restaurante, item_fornecido, telefone)
 VALUES 
-(18, (select id_restaurante from restaurante where id_chefe = 18), 'Jacob', 'Lopez', 'M', 200504, 'chefe', '21-98765432');
+(2, 1, 'XX-98765432'),
+(6, 2, 'XX-12365478'),
+(1, 3, 'XX-98745632'),
+(9, 4, 'XX-10258963'),
+(3, 5, 'XX-25896314'),
+(10, 6,'XX-15935785'),
+(7, 7, 'XX-85287469'),
+(4, 8, 'XX-02147852');
 
-INSERT INTO funcionario (id_funcionario, id_restaurante, nome, sobrenome, sexo, data_contratacao, funcao, telefone)
-VALUES
-(12, (select id_restaurante from restaurante where id_chefe = 12), 'Austin', 'Charles', 'M', 200504, 'chefe', '21-98765432'),
-
-(21, (select id_restaurante from restaurante where id_chefe = 21), 'Andrea', 'Morales', 'M', 200504, 'chefe', '21-98765432'),
-
-(32, (select id_restaurante from restaurante where id_chefe = 32), 'John', 'Diaz', 'M', 200504, 'chefe', '21-98765432'),
-
-(38, (select id_restaurante from restaurante where id_chefe = 38), 'William','Weber', 'M', 200504, 'chefe', '21-98765432'),
-
-(15, (select id_restaurante from restaurante where id_chefe = 15), 'Kristopher', 'Brow', 'M', 200504, 'chefe', '21-98765432'),
-
-(29, (select id_restaurante from restaurante where id_chefe = 29), 'Bridget', 'Fowler', 'F', 200504, 'chefe', '21-98765432'),
-
-(31, (select id_restaurante from restaurante where id_chefe = 31), 'William', 'Carlson', 'M', 200504, 'chefe', '21-98765432'),
-
-(11, (select id_restaurante from restaurante where id_chefe = 11), 'Kayla', 'Stout', 'F', 200504, 'chefe', '21-98765432'),
-
-(57, (select id_restaurante from restaurante where id_chefe = 57), 'Amanda', 'Peters', 'F', 200504, 'chefe', '21-98765432'),
-
-(8, (select id_restaurante from restaurante where id_chefe = 8), 'William', 'Hayes', 'M', 200504, 'chefe', '21-98765432');
+SELECT * from fornecedor;
