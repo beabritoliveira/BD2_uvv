@@ -90,3 +90,41 @@ CREATE TRIGGER povoar_trabalha_em_CHEF AFTER INSERT ON restaurante FOR EACH ROW
     INSERT Into trabalha_em (id_restaurante, id_funcionario)
 	VALUES (new.id_restaurante, new.id_chefe);
 END $$
+
+
+/* 	CRIANDO FOREIGN KEYS 	*/
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_idChefe
+FOREIGN KEY (id_chefe) REFERENCES funcionario (id_funcionario)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_lSanitaria
+FOREIGN KEY (alvara_sanitario) REFERENCES licenca_sanitaria (num_licenca)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE restaurante ADD CONSTRAINT fk_restaurante_idFederecao
+FOREIGN KEY (id_fed) REFERENCES federacao (id_fed)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE fornecedor ADD CONSTRAINT fk_fornecedor_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE fornecedor ADD CONSTRAINT fk_fornecedor_item
+FOREIGN KEY (item_fornecido) REFERENCES itemCardapio (id_item)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE trabalha_em ADD CONSTRAINT fk_trabalha_em_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE trabalha_em ADD CONSTRAINT fk_trabalha_em_idFuncionario
+FOREIGN KEY (id_funcionario) REFERENCES funcionario (id_funcionario)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE cardapio ADD CONSTRAINT fk_cardapio_idRestaurante
+FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE itemCardapio ADD CONSTRAINT fk_itemCardapio_idCardapio
+FOREIGN KEY (id_cardapio) REFERENCES cardapio (id_cardapio)
+ON DELETE CASCADE ON UPDATE CASCADE;
