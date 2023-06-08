@@ -130,23 +130,134 @@ select * from licenca_sanitaria;
 
 
 DELIMITER $$
-CREATE PROCEDURE povoar_Restaurante(in qnt_restaurante int)
+CREATE PROCEDURE povoar_Restaurante()
 BEGIN
-	DECLARE num;
+	DECLARE num int;
     DECLARE total_funcionario int;
+    DECLARE alet int;
+    DECLARE cat varchar(15);
+    DECLARE F int;
+    DECLARE nom varchar(45);
+    DECLARE incremento int;
+    DECLARE qnt_restaurante int ;
+    DECLARE quntDIN int;
+    DECLARE quntFIXO int;
+    DECLARE x int;
+    DECLARE vezes int;
+    
+    SET vezes = 0;
     SET num = 1;
+    SET incremento = 0;
     SET total_funcionario = (SELECT COUNT(id_funcionario) FROM funcionario);
     
-    WHILE total_funcionario > 1 DO
-		IF total_funcionario <=> ( SELECT id_funcionario FROM funcionario WHERE funcao = chefe)
+    set quntDIN = 1;
+    
+while vezes != 100 DO
+    
+    SET qnt_restaurante = (SELECT COUNT(ordem) FROM conexao)- (SELECT COUNT(id_restaurante) from restaurante); /* 300 - 10 = 290 */
+    SET quntFIXO = (SELECT COUNT(id_restaurante) FROM restaurante); /* 10 restaurantes já inseridos*/
+    SET quntDIN = quntFIXO + 1; /* 10 + 1= 11 posicao pra comecar*/
+    
+    WHILE quntDIN < (qnt_restaurante + quntFIXO) DO
+		        
+		SET alet = (RAND()*10);
+		/*Categoria restaurante*/
+		IF alet <=> 1 THEN
+			SET cat = 'Marroquino';
+		ELSEIF alet <=> 2 THEN
+			SET cat = 'Mexicano';
+		ELSEIF alet <=> 3 THEN
+			SET cat = 'Italiano';
+		ELSEIF alet <=> 4 THEN
+			SET cat = 'Frances';
+		ELSEIF alet <=> 5 THEN
+			SET cat = 'Brasileiro';
+		ELSEIF alet <=> 6 THEN
+			SET cat = 'Koreano';
+		ELSEIF alet <=> 7 THEN
+			SET cat = 'Japones';
+		ELSEIF alet <=> 8 THEN
+			SET cat = 'Thailandes';
+		ELSEIF alet <=> 9 THEN
+			SET cat = 'Cubano';
+		ELSEIF alet <=> 10 THEN
+			SET cat = 'Havaiano';
+		END IF;
 		
-		INSERT INTO restaurante (nome, id_chefe, horario_abertura, horario_fechar,
-						cnpj_responsavel, alvara_sanitario, categoria, id_fed)
-		VALUES(,total_funcionario, null, null,
-				(SELECT cnpj FROM licenca_sanitaria WHERE  )
-                );
-		
+        SET alet = (RAND()*10);
+		IF alet % 2 <=> 0 THEN
+			SET alet = alet % 7;
+			IF alet <=> 0 THEN
+				SET nom = 'azulee';
+			ELSEIF alet <=> 1 THEN
+				SET nom = 'Olivetti';
+			ELSEIF alet <=> 2 THEN
+				SET nom = 'Santo Cupim';
+			ELSEIF alet <=> 3 THEN
+				SET nom = 'Frances';
+			ELSEIF alet <=> 4 THEN
+				SET nom = 'Gran Sapore';
+			ELSEIF alet <=> 5 THEN
+				SET nom = 'Montebelo';
+			ELSEIF alet <=> 6 THEN
+				SET nom = 'Romeo & Giulietta';
+			END IF;
+		ELSEIF alet % 2 <=> 1 THEN
+			SET alet = alet % 7;
+			IF alet <=> 0 THEN
+				SET nom = 'The Tropical Road';
+			ELSEIF alet <=> 1 THEN
+				SET nom = 'The Caribbean Balcony';
+			ELSEIF alet <=> 2 THEN
+				SET nom = 'Flor de Alecrim';
+			ELSEIF alet <=> 3 THEN
+				SET nom = 'The Pepper Cloud';
+			ELSEIF alet <=> 4 THEN
+				SET nom = 'The Juniper Grill';
+			ELSEIF alet <=> 5 THEN
+				SET nom = 'The Lily';
+			ELSEIF alet <=> 6 THEN
+				SET nom = 'Green house';
+			END IF;
+		END IF;
+    
+		SET F = RAND() * 1000;
+        WHILE F > 136 or F < 111 DO
+			SET F = RAND() * 1000;
+		END WHILE;
+        
+        set x = (RAND()*100 * RAND()*10);
+    
+		IF total_funcionario <=> (SELECT id_funcionario FROM funcionario WHERE funcao = 'Chef' and id_funcionario = total_funcionario) 
+        THEN
+        
+			INSERT INTO restaurante (nome, id_chefe, categoria, id_fed, alvara_sanitario, cnpj_responsavel)
+			VALUES((CONCAT(nom, ' - ', CAST( x as CHAR))),
+					total_funcionario, 
+                    cat, 
+                    (SELECT id_fed from federacao where id_fed = F),
+                   (SELECT num_licenca       
+					FROM 
+					(SELECT ordem, num_licenca       
+					 FROM licenca_sanitaria ls        
+					 INNER JOIN conexao c ON (ls.num_licenca = c.num_lic)) as tabela                     
+					 WHERE ordem = quntDIN ),
+                    (SELECT cnpj       
+					FROM 
+					(SELECT ordem, cnpj         
+					 FROM licenca_sanitaria ls        
+					 INNER JOIN conexao c ON (ls.num_licenca = c.num_lic)) as tabela                     
+					 WHERE ordem = quntDIN) );
+                    
+		END IF;
+        
+        SET quntDIN = quntDIN + 1;
+		SET total_funcionario = total_funcionario -1;
     END WHILE;
+	
+    SET vezes = vezes + 1;
+end while;
+
 END $$
 DELIMITER ;
-CALL povoar_Restaurante(200);
+CALL povoar_Restaurante();
