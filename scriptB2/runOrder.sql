@@ -217,3 +217,58 @@ BEGIN
 	END WHILE; 
 END $$
 DELIMITER ;
+
+
+/*Povoamento da tabela licenca_sanitaria*/
+CREATE table conexao(
+		ordem int not null,
+        num_lic char(3) not null
+    );
+    
+DELIMITER $$ 
+CREATE PROCEDURE
+criando_alvaraSanitaria(IN quantidade_licenca int)
+BEGIN
+    DECLARE no_licenca int;
+    DECLARE id bigint;
+    DECLARE num int;
+    DECLARE incremento int;
+    DECLARE ordenacao int ;
+    SET incremento = 0;
+    SET ordenacao = 1;
+    
+	WHILE incremento < quantidade_licenca DO
+		SET no_licenca = (RAND() * 1000); /*Sorteia a licenca*/
+		SET id = (RAND() * 100000000000000);  /*Sorteia o CNPJ*/
+        SET num = (select COUNT(num_lic) from conexao);
+        
+		WHILE no_licenca < 100 DO
+			SET no_licenca = (RAND() * 1000); 
+		END WHILE;
+	
+		 WHILE id < 10000000000000 DO
+			SET id = (RAND() * 100000000000000); 
+		END WHILE;
+
+		SET ordenacao = 1;
+		WHILE ordenacao != 0 DO
+			SET ordenacao = (select COUNT(num_lic) from conexao where num_lic = no_licenca);
+			IF ordenacao <=> 0 THEN
+				INSERT INTO licenca_sanitaria (num_licenca, data_emissao, validade, cnpj)
+				VALUES ((CAST(no_licenca AS CHAR)), 191203, 201203, (CAST(id AS CHAR)));
+			ELSE 
+				WHILE ordenacao != 0 DO
+					WHILE no_licenca < 100 DO
+						SET no_licenca = (RAND() * 1000); 
+					END WHILE;
+					SET ordenacao = (select COUNT(num_lic) from conexao where num_lic = no_licenca);
+				END WHILE;
+			END IF;
+         END WHILE;       
+		
+        SET incremento = incremento + 1;    
+	END WHILE;
+END $$
+DELIMITER ;
+
+
