@@ -130,7 +130,7 @@ FOREIGN KEY (id_cardapio) REFERENCES cardapio (id_cardapio)
 ON DELETE CASCADE ON UPDATE CASCADE;
 
 /* 	INSERÇÃO TABELA FEDERACAO 	*/
-ALTER TABLE federacao AUTO_INCREMENT = 111;         
+ALTER TABLE federacao AUTO_INCREMENT = 11;         
 INSERT INTO federacao (cidade, estado)
 VALUES ('Acre', 'AC'),
 ('Alagoas', 'AL'),
