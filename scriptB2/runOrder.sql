@@ -128,3 +128,33 @@ ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE itemCardapio ADD CONSTRAINT fk_itemCardapio_idCardapio
 FOREIGN KEY (id_cardapio) REFERENCES cardapio (id_cardapio)
 ON DELETE CASCADE ON UPDATE CASCADE;
+
+/* 	INSERÇÃO TABELA FEDERACAO 	*/
+ALTER TABLE federacao AUTO_INCREMENT = 111;         
+INSERT INTO federacao (cidade, estado)
+VALUES ('Acre', 'AC'),
+('Alagoas', 'AL'),
+('Amapá', 'AP'),
+('Amazonas', 'AM'),
+('Bahia', 'BA'),
+('Ceará', 'CE'),
+('Espírito Santo', 'ES'),
+('Goiás', 'GO'),
+('Maranhão', 'MA'),
+('Mato Grosso', 'MT'),
+('Mato Grosso do Sul', 'MS'),
+('Minas Gerais', 'MG'),
+('Pará', 'PA'),
+('Paraíba', 'PB'),
+('Paraná', 'PR'),
+('Pernambuco', 'PE'),
+('Piauí', 'PI'),
+('Rio de Janeiro', 'RJ'),
+('Rio Grande do Norte', 'RN'),
+('Rio Grande do Sul', 'RS'),
+('Rondônia', 'RO'),
+('Roraima', 'RR'),
+('Santa Catarina', 'SC'),
+('São Paulo', 'SP'),
+('Sergipe', 'SE'),
+('Tocantins', 'TO');
