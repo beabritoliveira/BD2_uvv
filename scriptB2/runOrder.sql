@@ -519,19 +519,16 @@ DELIMITER $$
 CREATE PROCEDURE cadastrar_cardapio(in vezes int)
 BEGIN
 	DECLARE cardap int;
-    DECLARE min int;
-    DECLARE max int;
     DECLARE incrementar int;
     DECLARE sorteio int;
+    DECLARE num int;
     SET incrementar = 0;
     
     
     WHILE incrementar < vezes DO
 		SET sorteio = RAND()*1000;
-		SET min = (SELECT MIN(id_restaurante) FROM restaurante);
-		SET max = (SELECT MAX(id_restaurante) FROM restaurante);
         
-		WHILE sorteio > max DO
+		WHILE 0 <=> (SELECT COUNT(id_restaurante) FROM restaurante WHERE id_restaurante = sorteio) DO
 			SET sorteio = RAND()*1000;
 		END WHILE;
 		
@@ -540,10 +537,10 @@ BEGIN
         
         SET incrementar = incrementar + 1;
     END WHILE;
-    
 END $$
 DELIMITER ;
 
+CALL cadastrar_cardapio(100);
 /*POVOAR FORNECEDOR*/
 DELIMITER $$
 CREATE PROCEDURE povoar_fornecedor(in vezes int)
