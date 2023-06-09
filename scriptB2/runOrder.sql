@@ -460,27 +460,29 @@ BEGIN
     DECLARE incremento int;
     DECLARE restaurante int;
     DECLARE choice int;
-    
+    SET total = (SELECT MAX(id_funcionario) from funcionario);
     SET incremento = 1;
-	SET total = (SELECT count(id_funcionario) from funcionario);
-	SET restaurante = (SELECT count(id_restaurante) from restaurante);
     
     WHILE incremento <= total DO
     
 		SET func = (SELECT funcao from funcionario where id_funcionario = incremento);
         SET choice = RAND() * 1000;
-        WHILE choice > restaurante DO
+        WHILE 0 <=> (SELECT id_restaurante from restaurante where id_restaurante = choice) DO
 			 SET choice = RAND() * 1000;
 		END WHILE;
-		IF func !='Chef' THEN
-			INSERT INTO trabalha_em (id_restaurante, id_funcionario)
-            VALUES (choice, incremento);
+        
+        
+	
+		IF 0 != (SELECT COUNT(id_funcionario) from funcionario where id_funcionario = 152) THEN
+			IF func !='Chef' THEN
+				INSERT INTO trabalha_em (id_restaurante, id_funcionario)
+				VALUES (choice, incremento);
+			END IF;
 		END IF;
 		SET incremento = incremento + 1;
 	END WHILE;
 END $$
 DELIMITER ;
-
 
 /*POVOAR ITENS PEDIDO*/
 DELIMITER $$
