@@ -163,7 +163,12 @@ VALUES ('Acre', 'AC'),
 
 select * from federacao;
 
-
+/*TABELA para povoamento da tabela licenca_sanitaria*/
+CREATE table conexao(
+		ordem int not null,
+        num_lic char(3) not null
+    );
+    
 
 DELIMITER $$
 CREATE PROCEDURE
