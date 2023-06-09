@@ -1,6 +1,13 @@
 QUESTAO 1
 Escreva uma consulta que retorne por Chef o nome do restaurante que ele trabalha,
 a cidade que ele está localizado e a, o nome do chef e o telefone.
+    SELECT id_chefe, r.nome, f.nome, cidade
+    FROM restaurante r
+    INNER JOIN funcionario f ON (r.id_chefe = f.id_funcionario)
+    INNER JOIN federacao fed ON (r.id_fed = fed.id_fed)
+    ORDER BY id_chefe;
+
+
 
 QUESTAO 2
 Escreva uma consulta que conte por restaurante quantas licencas sanitárias eles possuem.
