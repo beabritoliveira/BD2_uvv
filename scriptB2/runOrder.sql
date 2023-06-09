@@ -540,32 +540,31 @@ END $$
 DELIMITER ;
 
 CALL cadastrar_cardapio(100);
+
+
 /*POVOAR FORNECEDOR*/
 DELIMITER $$
 CREATE PROCEDURE povoar_fornecedor(in vezes int)
 BEGIN
-	DECLARE sorteio int;
+	DECLARE search int;
     DECLARE min int;
     DECLARE max int;
     DECLARE incrementar int;
     SET incrementar = 1;
-    SET sorteio = 1;
     
 	WHILE incrementar < vezes DO
-		SET sorteio = RAND()*1000;
-		SET min = (SELECT MIN(id_item) FROM itemCardapio);
-		SET max = (SELECT MAX(id_item) FROM itemCardapio);
+		SET search = RAND()*1000;
         
-		WHILE sorteio < min or sorteio > max DO
-			SET sorteio = RAND()*1000;
+		WHILE 0 <=> (SELECT COUNT(id_item) FROM itemcardapio WHERE id_item = search) DO
+			SET search = RAND()*1000;
 		END WHILE;
 
 		INSERT INTO fornecedor (item_fornecido, id_restaurante, telefone)
 		VALUES (
-			sorteio, (SELECT id_restaurante
+			search, (SELECT id_restaurante
 					  FROM cardapio 
 					  INNER JOIN itemCardapio USING (id_cardapio)
-					  WHERE id_item = sorteio), null
+					  WHERE id_item = search), null
 		);
         
         SET incrementar = incrementar + 1;
