@@ -490,17 +490,15 @@ BEGIN
     DECLARE tempo int;
     DECLARE c_possivel int;
     DECLARE carpio int;
-    SET c_possivel = (SELECT COUNT(id_cardapio) from cardapio);
     SET carpio = 0;
     
     WHILE registro > 0 DO
 		SET preco = RAND()*100;
 		SET tempo = RAND()*1000;
-		SET carpio = ROUND(RAND()*100);
+		SET carpio = ROUND(RAND()*1000);
 		
-		WHILE carpio > c_possivel or carpio = 0 DO
-			SET carpio = ROUND(RAND()*100);
-            
+		WHILE 0 <=> (SELECT COUNT(id_cardapio) from cardapio where id_cardapio = carpio) DO
+			SET carpio = ROUND(RAND()*1000);
 		END WHILE;
 		WHILE tempo > 300 DO
 			SET tempo = RAND()*1000;
@@ -513,6 +511,7 @@ BEGIN
 	END WHILE;
 END $$
 DELIMITER ;
+
 
 /*POVOAR CARDAPIO*/
 DELIMITER $$
