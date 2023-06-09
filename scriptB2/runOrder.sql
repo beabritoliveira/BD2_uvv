@@ -227,49 +227,95 @@ CREATE table conexao(
     
 DELIMITER $$ 
 CREATE PROCEDURE
-criando_alvaraSanitaria(IN quantidade_licenca int)
+criando_alvaraSanitaria()
 BEGIN
-    DECLARE no_licenca int;
-    DECLARE id bigint;
-    DECLARE num int;
-    DECLARE incremento int;
-    DECLARE ordenacao int ;
-    SET incremento = 0;
-    SET ordenacao = 1;
+	DECLARE lic int;
+    DECLARE result char(3);
+    DECLARE rando1 int;
+    DECLARE rando2 int;
+    DECLARE rando3 int;
     
-	WHILE incremento < quantidade_licenca DO
-		SET no_licenca = (RAND() * 1000); /*Sorteia a licenca*/
-		SET id = (RAND() * 100000000000000);  /*Sorteia o CNPJ*/
-        SET num = (select COUNT(num_lic) from conexao);
-        
-		WHILE no_licenca < 100 DO
-			SET no_licenca = (RAND() * 1000); 
-		END WHILE;
-	
-		 WHILE id < 10000000000000 DO
-			SET id = (RAND() * 100000000000000); 
-		END WHILE;
-
-		SET ordenacao = 1;
-		WHILE ordenacao != 0 DO
-			SET ordenacao = (select COUNT(num_lic) from conexao where num_lic = no_licenca);
-			IF ordenacao <=> 0 THEN
-				INSERT INTO licenca_sanitaria (num_licenca, data_emissao, validade, cnpj)
-				VALUES ((CAST(no_licenca AS CHAR)), 191203, 201203, (CAST(id AS CHAR)));
-			ELSE 
-				WHILE ordenacao != 0 DO
-					WHILE no_licenca < 100 DO
-						SET no_licenca = (RAND() * 1000); 
-					END WHILE;
-					SET ordenacao = (select COUNT(num_lic) from conexao where num_lic = no_licenca);
-				END WHILE;
-			END IF;
-         END WHILE;       
-		
-        SET incremento = incremento + 1;    
+    DECLARE R char(14);
+    DECLARE R1 char(14);
+    DECLARE R2 char(14);
+    DECLARE R3 char(14);
+    
+    
+    /*CNPJ*/
+    SET rando1 = RAND() * 10000;
+    SET rando2 = RAND() * 100000;
+    SET rando3 = RAND() * 100000;
+    
+    IF rando1 < 1 or rando2 <=> 10000 THEN
+		SET R1 = '0000';
+    ELSEIF rando1 < 10 THEN
+		SET R1 = (CONCAT('000',(CAST(rando1 AS CHAR))));
+    ELSEIF rando1 < 100 THEN
+		SET R1 = (CONCAT('00',(CAST(rando1 AS CHAR))));
+	ELSEIF rando1 < 1000 THEN
+		SET R1 = (CONCAT('0',(CAST(rando1 AS CHAR))));
+    ELSE 
+		SET R1 = (CAST(rando1 AS CHAR));
+    END IF;
+    
+    IF rando2 < 1 or rando2 <=> 100000 THEN
+		SET R2 = '00000';
+    ELSEIF rando2 < 10 THEN
+		SET R2 = (CONCAT('0000',(CAST(rando2 AS CHAR))));
+    ELSEIF rando2 < 100 THEN
+		SET R2 = (CONCAT('000',(CAST(rando2 AS CHAR))));
+	ELSEIF rando2 < 1000 THEN
+		SET R2 = (CONCAT('00',(CAST(rando2 AS CHAR))));
+	ELSEIF rando2 < 10000 THEN
+		SET R2 = (CONCAT('0',(CAST(rando2 AS CHAR))));
+    ELSE 
+		SET R2 = (CAST(rando2 AS CHAR));
+    END IF;
+    
+    IF rando3 < 1 or rando3 <=> 10000 THEN
+		SET R3 = '0000';
+    ELSEIF rando3 < 10 THEN
+		SET R3 = (CONCAT('0000',(CAST(rando3 AS CHAR))));
+    ELSEIF rando2 < 100 THEN
+		SET R3 = (CONCAT('000',(CAST(rando3 AS CHAR))));
+	ELSEIF rando3 < 1000 THEN
+		SET R3 = (CONCAT('00',(CAST(rando3 AS CHAR))));
+	ELSEIF rando3 < 10000 THEN
+		SET R3 = (CONCAT('0',(CAST(rando3 AS CHAR))));
+    ELSE 
+		SET R3 = (CAST(rando3 AS CHAR));
+    END IF;
+    
+    SET R = (CONCAT (R1, R2, R3));
+    
+	/* LICENCA */	
+    SET result = '000';
+    WHILE 0 != (select COUNT(num_licenca) from licenca_sanitaria where num_licenca = result) DO
+		SET lic = (rand() * 1000);
+        IF lic < 1 or lic <=> 1000 THEN
+			SET result = '001';
+		ELSEIF lic < 10 THEN
+			SET result = (CONCAT('00',(CAST(lic AS CHAR))));
+		ELSEIF lic < 100 THEN
+			SET result = (CONCAT('0',(CAST(lic AS CHAR))));
+		ELSE 
+			SET result = (CAST(lic AS CHAR));
+		END IF;
 	END WHILE;
+		
+    INSERT INTO licenca_sanitaria (cnpj, num_licenca, validade, data_emissao)
+    VALUES (R, result, 121212, 131212);
+      
 END $$
 DELIMITER ;
+    
+CREATE INDEX index_licenca
+ ON projetobd2.licenca_sanitaria
+ (num_licenca);
+    
+CALL criando_alvaraSanitaria();
+
+
 
 
 /*Povoamento restaurante*/
