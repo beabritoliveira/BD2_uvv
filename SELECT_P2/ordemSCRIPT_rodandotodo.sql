@@ -470,6 +470,8 @@ BEGIN
     DECLARE tempo int;
     DECLARE c_possivel int;
     DECLARE carpio int;
+    DECLARE alet int;
+    DECLARE nome varchar(60);
     SET carpio = 0;
     
     WHILE registro > 0 DO
@@ -484,8 +486,33 @@ BEGIN
 			SET tempo = RAND()*1000;
 		END WHILE;
         
+        SET alet = RAND()*10;
+        IF alet <=> 0 THEN
+			SET nome = 'Camarao';
+        ELSEIF alet <=> 1 THEN
+			SET nome = 'Tagliatelle';
+		ELSEIF alet <=> 2 THEN
+			SET nome = 'Tomate';
+		ELSEIF alet <=> 3 THEN
+			SET nome = 'Ovos';
+		ELSEIF alet <=> 4 THEN
+			SET nome = 'Waffles';
+		ELSEIF alet <=> 5 THEN
+			SET nome = 'Cookies';
+		ELSEIF alet <=> 6 THEN
+			SET nome = 'Abobrinha';
+		ELSEIF alet <=> 7 THEN
+			SET nome = 'Peito de frango';
+		ELSEIF alet <=> 8 THEN
+			SET nome = 'Batata';
+		ELSEIF alet <=> 9 THEN
+			SET nome = 'Espinafre';
+		ELSEIF alet <=> 10 THEN
+			SET nome = 'Beringela';
+		END IF;
+        
 		INSERT INTO itemCardapio (id_cardapio, nome_item, valor, minutos_preparo)
-		VALUES (carpio, null, preco, tempo);
+		VALUES (carpio, nome, preco, tempo);
         
         SET registro = registro - 1;
 	END WHILE;
