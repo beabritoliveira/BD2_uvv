@@ -1,3 +1,37 @@
+INSERT INTO funcionario (id_funcionario, nome, sobrenome, sexo, data_contratacao, funcao, telefone)
+VALUES
+(1, 'Doe', 'John', 'M', 170214, 'Sou-chefe', 'XX-98765432'),
+(18, 'Jacob', 'Lopez', 'M', 200504, 'Chef', 'XX-98765432'),
+(5, 'Sheryl', 'Mccarty', 'F', 220714, 'Chef', null),
+(12, 'Austin', 'Charles', 'M', 211208, 'Chef', null),
+(21, 'Andrea', 'Morales', 'M', 180228, 'Chef', null),
+(32, 'John', 'Diaz', 'M', 200805, 'Chef', null),
+(38, 'William','Weber', 'M', 190331, 'Chef', null),
+(15, 'Kristopher', 'Brown', 'M', 220902, 'Chef', null),
+(29, 'Bridget', 'Fowler', 'F', 231104, 'Chef', null),
+(31, 'William', 'Carlson', 'M', 210627, 'Chef', null),
+(11, 'Kayla', 'Stout', 'F', 200929, 'Chef', null),
+(57, 'Amanda', 'Peters', 'F', 210817, 'Chef', null),
+(8,'William', 'Hayes', 'M', 190619, 'Chef', null);
+
+
+ALTER TABLE itemCardapio AUTO_INCREMENT = 1;
+INSERT INTO itemCardapio (id_cardapio, nome_item, valor, minutos_preparo)
+VALUES 
+(12, 'Camarao', '69.90', '40'),
+(6, 'Peito de frango', '13.50', '80'),
+(11, 'Tomate', '58.99', '25'),
+(9, 'Waffles', '25.80', '30'),
+(13, 'Batata', '47.90', '45'),
+(20, 'Tagliatelle', '58.90', '100'),
+(7, 'Cookies', '15.00', '90'),
+(4, 'Camarao', '60.30', '20');
+
+
+
+
+
+
 QUESTAO 1
 Escreva uma consulta que retorne por Chef o nome do restaurante que ele trabalha,
 a cidade que ele está localizado e a, o nome do chef e o telefone.
