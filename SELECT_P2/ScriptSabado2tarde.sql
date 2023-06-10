@@ -707,5 +707,3 @@ CALL cadastrar_cardapio(100); SELECT * FROM cardapio;
 CALL inserir_itemCardapio(100); SELECT * FROM itemcardapio;
 CALL povoar_fornecedor(100); SELECT * FROM fornecedor;
 CALL povoar_trabalha_em();  select * from trabalha_em;
-
-
