@@ -498,7 +498,7 @@ while incremento < 100 DO
 		END WHILE;
 		SET HF = RAND()*23;
 		WHILE HF > 2 and HF < 15 DO
-			SET HF = RAND()*21;
+			SET HF = RAND()*23;
 		END WHILE;
 
         
