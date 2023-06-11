@@ -38,19 +38,6 @@ o nome e o id de todos os que trabalham lá
 	) as r, 
     trabalha_em te, funcionario f
     WHERE max = quant_funci and te.id_funcionario = f.id_funcionario and t.id_restaurante = te.id_restaurante;
-    
-
-/*QUESTAO 4
-Escreva uma consulta que retorne o nome dos funcionarios as pessoas que trabalham
-em mais de um restaurante a sua funcao nele
-*/
-	SELECT id_funcionario, CONCAT(nome, '  ' , sobrenome) as nome, funcao
-    FROM 
-    (SELECT id_funcionario, COUNT(id_restaurante) as trab
-		from trabalha_em
-        GROUP BY id_funcionario) as t
-	INNER JOIN funcionario USING(id_funcionario)
-    WHERE trab > 1;
 
 
 /*QUESTAO 4
