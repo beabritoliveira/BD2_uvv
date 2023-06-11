@@ -53,16 +53,16 @@ em mais de um restaurante a sua funcao nele
     WHERE trab > 1;
 
 
-/*QUESTAO 5
+/*QUESTAO 4
 Selecione todos os restaurantes, e se eles estiverem conectados com um fornecedor,
  o fornecedor e o que é forncecido a ele
 */
-	SELECT id_fornecedor, nome, nome_item
+    SELECT id_fornecedor, nome, nome_item
     FROM fornecedor
     INNER JOIN itemCardapio ON (item_fornecido = id_item)
     RIGHT OUTER JOIN restaurante USING (id_restaurante);
 
-/*QUESTAO 6
+/*QUESTAO 5
 Selecione todos os funcionarios e caso estejam empregados onde ele trabalha
 */
 	SELECT CONCAT(f.nome,'  ', f.sobrenome) as funcionario , r.nome as restaurante
@@ -71,7 +71,7 @@ Selecione todos os funcionarios e caso estejam empregados onde ele trabalha
 	RIGHT OUTER JOIN funcionario f USING(id_funcionario);
 
 
-/*QUESTAO 7
+/*QUESTAO 6
 Identifique todos os chefs, mesmo os que não trabalham em nenhum dos restaurantes, e para 
 aqueles que trabalham identifique o alvara de funcionamento de onde eles trabalaham
 */
