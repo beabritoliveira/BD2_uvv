@@ -27,9 +27,10 @@ ORDER BY id_chefe;
 Escreva uma consulta que retorne quantos restaurantes cada responsavel tem
 */
 
-SELECT cnpj_responsavel, COUNT(id_restaurante)
+SELECT cnpj, COUNT(id_restaurante)
 FROM restaurante
-GROUP BY cnpj_responsavel;
+INNER JOIN licenca_sanitaria ON (alvara_sanitario = num_licenca)
+GROUP BY cnpj;
 
 
 /*QUESTAO 3
