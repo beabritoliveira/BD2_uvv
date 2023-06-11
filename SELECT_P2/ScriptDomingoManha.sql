@@ -239,6 +239,18 @@ VALUES
 (7, 7, 'XX-85287469'),
 (4, 8, 'XX-02147852');
 
+ALTER TABLE licenca_sanitaria
+ADD INDEX index_licenca_cnpj(cnpj);
+
+ALTER TABLE funcionario
+ADD INDEX index_func_nome(nome,sobrenome);
+
+ALTER TABLE funcionario
+ADD INDEX index_func_funcao(funcao);	
+
+ALTER TABLE restaurante
+ADD INDEX index_rest_chef(id_chefe);
+
 
 DELIMITER $$
 CREATE PROCEDURE
@@ -400,11 +412,6 @@ BEGIN
 	END WHILE;
 END $$
 DELIMITER ;
-
-
-CREATE INDEX index_licenca
- ON teste.licenca_sanitaria
- (num_licenca);
 
 
 /*Povoamento restaurante*/
